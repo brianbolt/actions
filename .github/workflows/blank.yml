@@ -32,11 +32,11 @@ jobs:
           branch=acas-bump-1.13.7.4
           echo ::set-output name=branch::${branch}
           exists=$(git ls-remote --heads origin ${branch})
-          echo ::set-output name=create-pr::false
+          echo ::set-output name=create_pr::true
           if [ -n "$exists" ]; then
             echo "${branch} exists"
           else
-            echo ::set-output name=create-pr::true
+            echo ::set-output name=create_pr::false
             echo "${branch} does NOT exist"
             git checkout -b $branch
             echo 1.13.7.4 > acas-release.version
@@ -45,7 +45,7 @@ jobs:
             git push --set-upstream origin $branch
           fi
       - name: Create Pull Request
-        if: steps.base-commit.outputs.create-pr
+        if: steps.base-commit.outputs.create_pr
         uses: actions/github-script@v6
         with:
           script: |
