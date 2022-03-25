@@ -30,13 +30,11 @@ jobs:
       - name: Commit base update
         if: steps.acas-release.outputs.current_tag != steps.acas-release.outputs.release_tag
         run: |
-          # Update current release
-          echo ${{ steps.acas-release.outputs.release_tag }} > acas-release.version
           git config --global user.name 'Your Name'
           git config --global user.email 'noreply@github.com'
-          git pull
-          git fetch
           git checkout acas-release-updates 2>/dev/null || git checkout -b acas-release-updates
+          # Update current release
+          echo ${{ steps.acas-release.outputs.release_tag }} > acas-release.version
           git add acas-release.version
           git commit -am "Update acas-release to ${{ steps.acas-release.outputs.release_tag }}"
           git push --set-upstream origin acas-release-updates
