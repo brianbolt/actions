@@ -26,6 +26,7 @@ jobs:
         run: |
           git config --global user.name 'Your Name'
           git config --global user.email 'noreply@github.com'
+          git remote prune origin
           branch=acas-bump-1.13.7.4
           echo ::set-output name=branch::${branch}
           exists=$(git ls-remote --heads origin ${branch})
