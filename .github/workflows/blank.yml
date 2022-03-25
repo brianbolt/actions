@@ -37,7 +37,7 @@ jobs:
           if [ -n "$exists" ]; then
               echo "$branch exists!"
           fi
-          git checkout -b acas-bump-${{ steps.acas-release.outputs.release_tag }}
+          git checkout -b $branch
           echo ${{ steps.acas-release.outputs.release_tag }} > acas-release.version
           git commit -am "Update acas-release to ${{ steps.acas-release.outputs.release_tag }}"
           git push --set-upstream origin $branch
