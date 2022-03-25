@@ -44,7 +44,7 @@ jobs:
             git push --set-upstream origin $branch
           fi
       - name: Create Pull Request
-        if: steps.base-commit.outputs.create-pr == True
+        if: steps.base-commit.outputs.create-pr
         uses: actions/github-script@v6
         with:
           script: |
