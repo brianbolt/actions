@@ -32,12 +32,15 @@ jobs:
         run: |
           git config --global user.name 'Your Name'
           git config --global user.email 'noreply@github.com'
-          git checkout acas-release-updates 2>/dev/null || git checkout -b acas-release-updates
-          # Update current release
+          branch=acas-bump-${{ steps.acas-release.outputs.release_tag }}
+          exists=`git show-ref refs/heads/$branch`
+          if [ -n "$exists" ]; then
+              echo "$branch exists!"
+          fi
+          git checkout -b acas-bump-${{ steps.acas-release.outputs.release_tag }}
           echo ${{ steps.acas-release.outputs.release_tag }} > acas-release.version
-          git add acas-release.version
           git commit -am "Update acas-release to ${{ steps.acas-release.outputs.release_tag }}"
-          git push --set-upstream origin acas-release-updates
+          git push --set-upstream origin $branch
       - name: Create Pull Request
         uses: actions/github-script@v6
         with:
