@@ -44,8 +44,6 @@ jobs:
             git commit -m "Update acas-release to 1.13.7.4"
             git push --set-upstream origin $branch
           fi
-      - name: Commit base update
-        if: steps.acas-release.outputs.current_tag != steps.acas-release.outputs.release_tag
       - name: Display Python version
         run: echo "${{ steps.base-commit.outputs.create_pr }}"
       - name: Create Pull Request
