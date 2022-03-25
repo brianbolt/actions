@@ -44,8 +44,11 @@ jobs:
             git commit -m "Update acas-release to 1.13.7.4"
             git push --set-upstream origin $branch
           fi
+      - name: Commit base update
+        if: steps.acas-release.outputs.current_tag != steps.acas-release.outputs.release_tag
+      - name: Display Python version
+        run: echo "${{ steps.base-commit.outputs.create_pr }}"
       - name: Create Pull Request
-        if: steps.base-commit.outputs.create_pr
         uses: actions/github-script@v6
         with:
           script: |
@@ -67,3 +70,5 @@ jobs:
               issue_number: result.data.number,
               labels: ['feature', 'automated pr']
             });
+        if: steps.base-commit.outputs.create_pr
+
