@@ -48,7 +48,7 @@ jobs:
         run: echo "${{ steps.base-commit.outputs.create_pr }}"
       - name: Create Pull Request
         uses: actions/github-script@v6
-        if: ${{ steps.base-commit.outputs.create_pr }} == 'true'
+        if: ${{ steps.base-commit.outputs.create_pr  == 'true' }}
         with:
           script: |
             const { repo, owner } = context.repo;
