@@ -1,4 +1,4 @@
-name: ACAS Version Bumper
+name: ACAS version bumper
 
 on:
   schedule:
