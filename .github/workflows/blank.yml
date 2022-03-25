@@ -34,6 +34,8 @@ jobs:
           echo ${{ steps.acas-release.outputs.release_tag }} > acas-release.version
           git config --global user.name 'Your Name'
           git config --global user.email 'noreply@github.com'
+          git pull
+          git fetch
           git checkout acas-release-updates 2>/dev/null || git checkout -b acas-release-updates
           git add acas-release.version
           git commit -am "Update acas-release to ${{ steps.acas-release.outputs.release_tag }}"
