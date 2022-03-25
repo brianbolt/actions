@@ -18,8 +18,8 @@ jobs:
         with:
           script: |
             const result = await github.rest.repos.getLatestRelease({
-              "mcneilco",
-              "acas"
+              owner: "mcneilco",
+              repo: "acas"
             });
             return result;
       - uses: actions/checkout@v3
