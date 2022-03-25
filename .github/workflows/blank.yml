@@ -41,7 +41,7 @@ jobs:
             git push --set-upstream origin $branch
             echo ::set-output name=create_pr::true
           fi
-      - name: Create Pull Request
+      - name: Create Pull Request and merge it
         uses: actions/github-script@v6
         if: ${{ steps.base-commit.outputs.create_pr  == 'true' }}
         with:
@@ -58,10 +58,23 @@ jobs:
                 '[actions/github-script](https://github.com/actions/github-script).'
               ].join('\n')
             });
+            echo ::set-output name=pr-number::result.data.number
             github.rest.issues.addLabels({
               owner,
               repo,
               issue_number: result.data.number,
               labels: ['feature', 'automated pr']
             });
+            github.rest.issues.addLabels({
+              owner,
+              repo,
+              issue_number: result.data.number,
+              labels: ['feature', 'automated pr']
+            });
+            github.rest.pulls.merge({
+              owner,
+              repo,
+              pull_number,
+            });
+            
 
