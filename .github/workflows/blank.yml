@@ -17,10 +17,9 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { repo, owner } = context.repo;
             return await github.rest.repos.getLatestRelease({
-              owner,
-              repo,
+              'mcneilco',
+              'acas',
             });
       - uses: actions/checkout@v3
         with:
