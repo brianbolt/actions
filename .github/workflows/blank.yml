@@ -32,8 +32,8 @@ jobs:
           branch=acas-bump-1.13.7.4
           echo ::set-output name=branch::${branch}
           exists=$(git ls-remote --heads origin ${branch})
+          echo ::set-output name=create-pr::false
           if [ -n "$exists" ]; then
-            echo ::set-output name=create-pr::false
             echo "${branch} exists"
           else
             echo ::set-output name=create-pr::true
