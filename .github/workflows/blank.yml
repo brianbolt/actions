@@ -44,8 +44,6 @@ jobs:
             git push --set-upstream origin $branch
             echo ::set-output name=create_pr::true
           fi
-      - name: Should create PR
-        run: echo "${{ steps.base-commit.outputs.create_pr }}"
       - name: Create Pull Request
         uses: actions/github-script@v6
         if: ${{ steps.base-commit.outputs.create_pr  == 'true' }}
