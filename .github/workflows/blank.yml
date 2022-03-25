@@ -24,7 +24,7 @@ jobs:
         if: steps.acas-release.outputs.current_tag != steps.acas-release.outputs.release_tag
         id: base-commit
         run: |
-          git config --global user.name 'Your Name'
+          git config --global user.name '${{ github.actor }}'
           git config --global user.email 'noreply@github.com'
           git remote prune origin
           branch=acas-bump-1.13.7.4
