@@ -32,17 +32,17 @@ jobs:
           branch=acas-bump-1.13.7.4
           echo ::set-output name=branch::${branch}
           exists=$(git ls-remote --heads origin ${branch})
-          echo ::set-output name=create_pr::true
+          echo ::set-output name=create_pr::false
           if [ -n "$exists" ]; then
             echo "${branch} exists"
           else
-            echo ::set-output name=create_pr::false
             echo "${branch} does NOT exist"
             git checkout -b $branch
             echo 1.13.7.4 > acas-release.version
             git add acas-release.version
             git commit -m "Update acas-release to 1.13.7.4"
             git push --set-upstream origin $branch
+            echo ::set-output name=create_pr::true
           fi
       - name: Display Python version
         run: echo "${{ steps.base-commit.outputs.create_pr }}"
