@@ -25,14 +25,18 @@ jobs:
           echo ::set-output name=current_tag::$(<acas-release.version)
       - name: Commit base update
         if: steps.acas-release.outputs.current_tag != steps.acas-release.outputs.release_tag
+        id: base-commit
         run: |
           git config --global user.name 'Your Name'
           git config --global user.email 'noreply@github.com'
           branch=acas-bump-1.13.7.4
+          echo ::set-output name=branch::${branch}
           exists=$(git ls-remote --heads origin ${branch})
           if [ -n "$exists" ]; then
+            echo ::set-output name=create-pr::False
             echo "${branch} exists"
           else
+            echo ::set-output name=create-pr::True
             git checkout -b $branch
             echo 1.13.7.4 > acas-release.version
             git add acas-release.version
@@ -40,6 +44,7 @@ jobs:
             git push --set-upstream origin $branch
           fi
       - name: Create Pull Request
+        if: steps.base-commit.outputs.create-pr == True
         uses: actions/github-script@v6
         with:
           script: |
