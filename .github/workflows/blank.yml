@@ -35,7 +35,7 @@ jobs:
           branch=acas-bump-${{ steps.acas-release.outputs.release_tag }}
           exists=`git show-ref refs/heads/$branch`
           if [ -n "$exists" ]; then
-              echo "${branch} exists!"
+              echo "${branch} exists"
           fi
           git checkout -b $branch
           echo ${{ steps.acas-release.outputs.release_tag }} > acas-release.version
