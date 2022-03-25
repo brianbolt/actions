@@ -19,7 +19,7 @@ jobs:
           script: |
             return await github.rest.repos.getLatestRelease({
               'mcneilco',
-              'acas',
+              'acas'
             });
       - uses: actions/checkout@v3
         with:
