@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0         
-      - name: Get current ACAS base release from ${{ context.repo.repo }}
+      - name: Get current ACAS base release from ${{ github.repository }}
         id: acas-release
         run: |
           echo ::set-output name=current_tag::$(<acas-release.version)
