@@ -39,7 +39,8 @@ jobs:
           fi
           git checkout -b $branch
           echo ${{ steps.acas-release.outputs.release_tag }} > acas-release.version
-          git commit -am "Update acas-release to ${{ steps.acas-release.outputs.release_tag }}"
+          git add acas-release.version
+          git commit -m "Update acas-release to ${{ steps.acas-release.outputs.release_tag }}"
           git push --set-upstream origin $branch
       - name: Create Pull Request
         uses: actions/github-script@v6
