@@ -3,7 +3,7 @@ name: ACAS Version Bumper
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '* 1 * * *'
+    - cron:  '0/5 * * * *'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -12,16 +12,24 @@ jobs:
     name: ACAS base version check and bump
     runs-on: ubuntu-latest
     steps:
+      - name: Get latest ACAS release
+        id: acas-base-latest
+        uses: actions/github-script@v6
+        with:
+          script: |
+            return rest.repos.getLatestRelease({
+              owner,
+              repo,
+            });
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
-      - name: Get latest ACAS release
+          fetch-depth: 0         
+      - name: Get current ACAS base release from ${{ context.repo.repo }}
         id: acas-release
         run: |
-          echo ::set-output name=release_tag::$(curl -sL https://api.github.com/repos/mcneilco/acas/releases/latest | jq -r ".tag_name")
           echo ::set-output name=current_tag::$(<acas-release.version)
       - name: Commit base update
-        if: steps.acas-release.outputs.current_tag != steps.acas-release.outputs.release_tag
+        if: steps.acas-release.outputs.current_tag != "${{steps.output-set.acas-base-latest.result}}"
         id: base-commit
         run: |
           git config --global user.name '${{ github.actor }}'
@@ -76,5 +84,5 @@ jobs:
               repo,
               pull_number: result.data.number
             });
-            
+    
 
