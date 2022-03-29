@@ -15,7 +15,8 @@ jobs:
         uses: actions/checkout@v3     
       - name: Get ACAS Tag
         run: |
-          echo ::set-output name=current_tag::$(<acas-release.version)
+          name=$(<acas-release.version)
+          echo ::set-output name=current_tag::$name
           echo "ACAS Tag $name"
       # - name: Set up QEMU
       #   uses: docker/setup-qemu-action@v1
